@@ -17,7 +17,7 @@ const Hero = () => {
           <source src="/HeroBackground.mp4" type="video/mp4" />
         </video>
         {/* Overlay - only bottom gradient for seamless navbar blend */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-60 z-10" />
       </div>
 
       {/* Content Container - positioned at bottom */}

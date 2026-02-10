@@ -55,6 +55,7 @@ export default function AboutUs() {
     let lastWheelTime = 0;
     const wheelCooldown = 800;
     const handleWheel = (e) => {
+      if (window.innerWidth < 1024) return;
       e.preventDefault();
       const now = Date.now();
       if (now - lastWheelTime < wheelCooldown) return;
@@ -74,9 +75,11 @@ export default function AboutUs() {
 
     let touchStartY = 0;
     const handleTouchStart = (e) => {
+      if (window.innerWidth < 1024) return;
       touchStartY = e.touches[0].clientY;
     };
     const handleTouchEnd = (e) => {
+      if (window.innerWidth < 1024) return;
       const touchEndY = e.changedTouches[0].clientY;
       const diff = touchStartY - touchEndY;
       if (Math.abs(diff) < 50) return;
@@ -93,6 +96,7 @@ export default function AboutUs() {
     };
 
     const handleKeyDown = (e) => {
+      if (window.innerWidth < 1024) return;
       if (isScrolling.current) return;
       let direction = 0;
       if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
@@ -147,7 +151,7 @@ export default function AboutUs() {
           }
         });
       },
-      { root: wrapper, threshold: 0.15 },
+      { root: null, threshold: 0.15 },
     );
     const sections = wrapper.querySelectorAll(".fullpage-section");
     sections.forEach((section) => observer.observe(section));
@@ -568,36 +572,66 @@ export default function AboutUs() {
 
       <style jsx>{`
         .fullpage-wrapper {
-          height: 100vh;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          scroll-behavior: smooth;
+          width: 100%;
+          overflow-x: hidden;
         }
-        .fullpage-wrapper::-webkit-scrollbar {
-          display: none;
-        }
+
         .fullpage-section {
           min-height: 100vh;
-          height: 100vh;
-          overflow: hidden;
           display: flex;
           flex-direction: column;
-          opacity: 0;
-          transform: translateY(30px);
-          transition:
-            opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-            transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .fullpage-section.hero-section {
-          min-height: 80vh;
-          height: 80vh;
+
+        /* Mobile specific overrides to ensure visibility and flow */
+        @media (max-width: 1023px) {
+          .fullpage-section {
+            opacity: 1 !important;
+            transform: none !important;
+            overflow: visible;
+            height: auto !important;
+          }
+          /* Allow hero to be natural height on mobile */
+          .fullpage-section.hero-section {
+            min-height: auto;
+            height: auto;
+            padding-top: 80px; /* Space for navbar */
+          }
         }
-        .fullpage-section.section-visible {
-          opacity: 1;
-          transform: translateY(0);
+
+        @media (min-width: 1024px) {
+          .fullpage-wrapper {
+            height: 100vh;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+          }
+          .fullpage-wrapper::-webkit-scrollbar {
+            display: none;
+          }
+
+          .fullpage-section {
+            height: 100vh;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+              opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          }
+
+          .fullpage-section.hero-section {
+            min-height: 80vh;
+            height: 80vh;
+          }
+
+          .fullpage-section.section-visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
+
         .fullpage-section > * {
           flex: 1;
           width: 100%;

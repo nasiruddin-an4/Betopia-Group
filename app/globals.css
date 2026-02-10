@@ -89,21 +89,24 @@ body {
 }
 
 /* Fullpage scroll-snap: hide body/html scroll when wrapper is active */
-html:has(.fullpage-wrapper),
-body:has(.fullpage-wrapper) {
-  overflow: hidden !important;
-  height: 100vh;
-}
-
 /* Hide ONLY the layout-level footer (sibling of main), not the one inside fullpage-wrapper */
-body:has(.fullpage-wrapper) > main ~ footer {
+body:has(.fullpage-wrapper) > footer {
   display: none !important;
 }
 
-/* Prevent body from scrolling with the fullpage wrapper */
-body:has(.fullpage-wrapper) > main {
-  height: 100vh;
-  overflow: hidden;
+/* Fullpage scroll-snap: hide body/html scroll when wrapper is active ONLY on desktop */
+@media (min-width: 1024px) {
+  html:has(.fullpage-wrapper),
+  body:has(.fullpage-wrapper) {
+    overflow: hidden !important;
+    height: 100vh;
+  }
+
+  /* Prevent body from scrolling with the fullpage wrapper */
+  body:has(.fullpage-wrapper) > main {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 /* Hide the scrollbar on the fullpage wrapper itself */

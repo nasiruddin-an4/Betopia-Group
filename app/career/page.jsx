@@ -171,8 +171,8 @@ export default function CareerPage() {
   };
 
   return (
-    <div className="pt-32">
-      <main className="relative w-full h-[60vh]">
+    <div className="pt-20 md:pt-32">
+      <main className="relative w-full h-[70vh] md:h-[60vh]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -184,16 +184,16 @@ export default function CareerPage() {
           />
         </div>
 
-        <div className="relative z-10 flex flex-col justify-center h-[60vh] px-4 md:px-8 lg:px-16 pt-24 text-black">
+        <div className="relative z-10 flex flex-col justify-center h-[60vh] px-4 md:px-8 lg:px-16 pt-16 md:pt-24 text-black">
           <span className="text-sm font-semibold uppercase tracking-wider mb-4 block">
             Career at Betopia
           </span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1]">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1]">
             We don&apos;t fill positions.
             <br />
             We fuel ambitions.
           </h1>
-          <p className="text-black/90 text-lg mb-10 max-w-lg leading-relaxed">
+          <p className="text-black/90 text-sm md:text-lg mb-8 md:mb-10 max-w-lg leading-relaxed">
             Connect your intelligence to a network of 5,000+ pioneers. From
             optimizing national food chains to engineering smart cities, build
             what matters.
@@ -201,7 +201,7 @@ export default function CareerPage() {
 
           <a
             href="#"
-            className="inline-flex items-center justify-between px-8 py-4 bg-white text-black border border-black rounded-full font-medium hover:bg-black hover:text-white transition-all group mb-10 w-fit min-w-[280px]"
+            className="inline-flex items-center justify-between px-6 py-4 md:px-8 bg-white text-black border border-black rounded-full font-medium hover:bg-black hover:text-white transition-all group mb-8 md:mb-10 w-full md:w-fit md:min-w-[280px]"
           >
             View Open Positions
             <ArrowRight className="ml-4 w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -458,11 +458,11 @@ export default function CareerPage() {
       {/* Cultural Code Section */}
       <section className="bg-gradient-to-b from-[#CCFBF1] to-white py-24">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-            <h2 className="text-[1.5rem] md:text-[2.5rem] font-bold text-black mb-4 md:mb-0">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16">
+            <h2 className="text-[1.5rem] md:text-[2.5rem] font-bold text-black mb-4 md:mb-0 text-center md:text-left">
               Our Cultural Code
             </h2>
-            <p className="text-black/70 max-w-xl text-lg font-medium text-right">
+            <p className="text-black/70 max-w-xl text-lg font-medium text-center md:text-right">
               5,000+ Minds. 28 Enterprises. One Mission: Engineering the future
               of Bangladesh for the World.
             </p>
@@ -630,26 +630,29 @@ export default function CareerPage() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="bg-[#1A1A1A] rounded-2xl overflow-hidden flex flex-col lg:flex-row">
             {/* Left Content */}
-            <div className="lg:w-1/2 p-12 md:p-16 lg:p-20 flex flex-col justify-center">
+            <div className="w-full lg:w-1/2 p-6 md:p-12 lg:p-20 flex flex-col justify-center order-2 lg:order-1">
               <h2 className="text-[1.5rem] md:text-[2.5rem] font-bold text-white mb-6 leading-tight">
                 Easy Ways to Launch Your Career
               </h2>
-              <p className="text-gray-400 text-lg mb-12 max-w-md">
+              <p className="text-gray-400 text-base md:text-lg mb-12 max-w-md">
                 Kickstart your career with just a few easy steps and apply
                 seamlessly
               </p>
 
-              <div className="space-y-10">
+              <div className="space-y-8 md:space-y-10">
                 {APPLICATION_STEPS.map((step) => (
-                  <div key={step.number} className="flex gap-6 items-start">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full border border-gray-600 flex items-center justify-center text-white font-medium text-sm">
+                  <div
+                    key={step.number}
+                    className="flex gap-4 md:gap-6 items-start"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border border-gray-600 flex items-center justify-center text-white font-medium text-sm">
                       {step.number}
                     </div>
                     <div>
-                      <h3 className="text-white text-xl font-bold mb-2">
+                      <h3 className="text-white text-lg md:text-xl font-bold mb-2">
                         {step.title}
                       </h3>
-                      <p className="text-gray-400 leading-relaxed text-sm">
+                      <p className="text-gray-400 leading-relaxed text-sm md:text-base">
                         {step.description}
                       </p>
                     </div>
@@ -659,7 +662,7 @@ export default function CareerPage() {
             </div>
 
             {/* Right Image */}
-            <div className="lg:w-1/2 relative min-h-[400px] lg:min-h-full">
+            <div className="w-full lg:w-1/2 relative min-h-[300px] md:min-h-[400px] lg:min-h-full order-1 lg:order-2">
               <Image
                 src="/10012.jpg"
                 alt="Working at Betopia"

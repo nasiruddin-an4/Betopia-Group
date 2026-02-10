@@ -60,6 +60,7 @@ export default function Home() {
     const wheelCooldown = 800; // ms between scroll snaps
 
     const handleWheel = (e) => {
+      if (window.innerWidth < 1024) return;
       e.preventDefault();
 
       const now = Date.now();
@@ -81,10 +82,12 @@ export default function Home() {
     // Touch handling for mobile
     let touchStartY = 0;
     const handleTouchStart = (e) => {
+      if (window.innerWidth < 1024) return;
       touchStartY = e.touches[0].clientY;
     };
 
     const handleTouchEnd = (e) => {
+      if (window.innerWidth < 1024) return;
       const touchEndY = e.changedTouches[0].clientY;
       const diff = touchStartY - touchEndY;
 
@@ -104,6 +107,7 @@ export default function Home() {
 
     // Keyboard handling
     const handleKeyDown = (e) => {
+      if (window.innerWidth < 1024) return;
       if (isScrolling.current) return;
 
       let direction = 0;
@@ -161,8 +165,8 @@ export default function Home() {
         });
       },
       {
-        root: wrapper,
-        threshold: 0.15,
+        root: null,
+        threshold: 0.1,
       },
     );
 
@@ -190,33 +194,54 @@ export default function Home() {
 
       <style jsx>{`
         .fullpage-wrapper {
-          height: 100vh;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          scroll-behavior: smooth;
+          width: 100%;
+          overflow-x: hidden;
         }
 
-        .fullpage-wrapper::-webkit-scrollbar {
-          display: none;
+        @media (min-width: 1024px) {
+          .fullpage-wrapper {
+            height: 100vh;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+          }
+
+          .fullpage-wrapper::-webkit-scrollbar {
+            display: none;
+          }
         }
 
         .fullpage-section {
           min-height: 100vh;
-          overflow: hidden;
           display: flex;
           flex-direction: column;
-          opacity: 0;
-          transform: translateY(30px);
-          transition:
-            opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-            transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .fullpage-section.section-visible {
-          opacity: 1;
-          transform: translateY(0);
+        /* Mobile specific overrides to ensure visibility and flow */
+        @media (max-width: 1023px) {
+          .fullpage-section {
+            opacity: 1 !important;
+            transform: none !important;
+            overflow: visible;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .fullpage-section {
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+              opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          }
+
+          .fullpage-section.section-visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .fullpage-section > * {

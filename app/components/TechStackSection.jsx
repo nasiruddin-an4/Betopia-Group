@@ -144,13 +144,13 @@ const TechStackSection = () => {
       <div className="flex flex-col gap-8">
         {/* Row 1: Left to Right */}
         <div className="relative w-full overflow-hidden">
-          <div className="absolute top-0 left-0 h-full w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 right-0 h-full w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 left-0 h-full w-24 md:w-48 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 h-full w-24 md:w-48 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
           <div className="flex w-max animate-[marquee-reverse_60s_linear_infinite] hover:[animation-play-state:paused] py-4">
             {[...techStack, ...techStack].map((tech, index) => (
               <div
                 key={`${tech.name}-${index}-1`}
-                className="mx-4 w-[280px] h-[180px] flex-shrink-0 group"
+                className="mx-4 w-[280px] h-[180px] shrink-0 group"
               >
                 <div className="w-full h-full bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-lg hover:border-gray-200 transition-all duration-300 flex flex-col items-start text-left justify-center cursor-default">
                   {/* Logo / Icon */}
@@ -179,13 +179,13 @@ const TechStackSection = () => {
 
         {/* Row 2: Right to Left */}
         <div className="relative w-full overflow-hidden">
-          <div className="absolute top-0 left-0 h-full w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 right-0 h-full w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 left-0 h-full w-24 md:w-48 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 h-full w-24 md:w-48 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
           <div className="flex w-max animate-[marquee_60s_linear_infinite] hover:[animation-play-state:paused] py-4">
             {[...techStack2, ...techStack2].map((tech, index) => (
               <div
                 key={`${tech.name}-${index}-2`}
-                className="mx-4 w-[280px] h-[180px] flex-shrink-0 group"
+                className="mx-4 w-[280px] h-[180px] shrink-0 group"
               >
                 <div className="w-full h-full bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-lg hover:border-gray-200 transition-all duration-300 flex flex-col items-start text-left justify-center cursor-default">
                   {/* Logo / Icon */}

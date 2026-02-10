@@ -211,7 +211,7 @@ const Counter = ({ end, duration = 2000, suffix = "" }) => {
 
 export default function IndustriesPage() {
   return (
-    <div className="pt-32">
+    <div className="pt-20">
       <main className="relative w-full h-[60vh]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -245,7 +245,7 @@ export default function IndustriesPage() {
       {/* Stats Section */}
       <section className="bg-black py-16 text-white border-b border-gray-800">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
             {STATS.map((stat, index) => (
               <div key={index} className="text-center md:text-left">
                 <div className="text-4xl md:text-5xl font-bold mb-2 text-[#FF8F3D]">
