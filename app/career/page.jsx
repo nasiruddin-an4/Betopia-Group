@@ -47,6 +47,67 @@ const OFFERS = [
   },
 ];
 
+const JOB_CATEGORIES = [
+  "New",
+  "Design",
+  "Development",
+  "Software Engineer",
+  "Marketing",
+  "Finance",
+];
+
+const JOBS = [
+  {
+    title: "Senior UI Designer",
+    category: "Design",
+    location: "Dhaka, Bangladesh",
+    description:
+      "We are looking for Senior UI Designer to work on our projects...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+  {
+    title: "Junior Product Designer",
+    category: "Design",
+    location: "Dhaka, Bangladesh",
+    description: "We are looking for Junior Product Designer...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+  {
+    title: "Full Stack Developer",
+    category: "Development",
+    location: "Dhaka, Bangladesh",
+    description: "We are looking for Senior Product Designer...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+  {
+    title: "Senior Project Manager",
+    category: "Marketing",
+    location: "Dhaka, Bangladesh",
+    description: "We are looking for Senior Project Manager...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+  {
+    title: "Senior Data Analyst",
+    category: "Software Engineer",
+    location: "Dhaka, Bangladesh",
+    description: "We are looking for Senior Data Analyst...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+  {
+    title: "Senior AI Engineer",
+    category: "Software Engineer",
+    location: "Dhaka, Bangladesh",
+    description: "We are looking for Senior Product Designer...",
+    salary: "120k - 140k/month",
+    tags: ["Fulltime", "On-site"],
+  },
+];
+
 const APPLICATION_STEPS = [
   {
     number: "01",
@@ -83,52 +144,14 @@ const NEWS_ITEMS = [
   },
 ];
 
-// Utility to strip HTML tags from rich-text descriptions
-const stripHtml = (html) => {
-  if (!html) return "";
-  return html.replace(/<[^>]*>/g, "").trim();
-};
-
 export default function CareerPage() {
   const scrollContainerRef = useRef(null);
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [jobs, setJobs] = useState([]);
-  const [jobsLoading, setJobsLoading] = useState(true);
-  const [jobsError, setJobsError] = useState(null);
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setJobsLoading(true);
-        setJobsError(null);
-        const res = await fetch("/api/jobs");
-        if (!res.ok) throw new Error("Failed to fetch jobs");
-        const data = await res.json();
-        if (data.success && data.jobs) {
-          setJobs(data.jobs);
-        } else {
-          setJobs([]);
-        }
-      } catch (err) {
-        console.error("Error fetching jobs:", err);
-        setJobsError("Unable to load jobs. Please try again later.");
-      } finally {
-        setJobsLoading(false);
-      }
-    };
-    fetchJobs();
-  }, []);
-
-  // Build dynamic categories from fetched jobs
-  const jobCategories = [
-    "All",
-    ...Array.from(new Set(jobs.map((job) => job.department).filter(Boolean))),
-  ];
+  const [activeCategory, setActiveCategory] = useState("New");
 
   const filteredJobs =
-    activeCategory === "All"
-      ? jobs
-      : jobs.filter((job) => job.department === activeCategory);
+    activeCategory === "New"
+      ? JOBS
+      : JOBS.filter((job) => job.category === activeCategory);
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -532,139 +555,82 @@ export default function CareerPage() {
             </h2>
 
             {/* Filter Tabs */}
-            {!jobsLoading && !jobsError && jobs.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-4">
-                {jobCategories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`px-8 py-3 rounded-full border transition-all duration-300 ${
-                      activeCategory === category
-                        ? "bg-[#3D3D3D] text-white border-[#3D3D3D]"
-                        : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
+            <div className="flex flex-wrap justify-center gap-4">
+              {JOB_CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-8 py-3 rounded-full border transition-all duration-300 ${
+                    activeCategory === category
+                      ? "bg-[#3D3D3D] text-white border-[#3D3D3D]"
+                      : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Jobs Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map((job, index) => (
+                <div
+                  key={index}
+                  className="bg-[#FAFAFA] p-8 rounded-[32px] hover:shadow-lg transition-shadow group h-full flex flex-col"
+                >
+                  <h3 className="text-xl font-bold text-black mb-3">
+                    {job.title}
+                  </h3>
+
+                  <div className="flex items-center text-gray-400 text-xs mb-6">
+                    <MapPin className="w-3 h-3 mr-1" />
+                    {job.location}
+                  </div>
+
+                  <p className="text-gray-500 text-sm mb-6 line-clamp-2">
+                    {job.description}
+                  </p>
+
+                  <div className="flex items-center text-gray-600 text-sm font-medium mb-6">
+                    <Clock className="w-4 h-4 mr-2" />
+                    {job.salary}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+                    {job.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="px-4 py-1.5 bg-[#EBEBEB] text-black text-xs font-semibold rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-4">
+                    <a
+                      href="#"
+                      className="inline-flex items-center text-[#FF8F3D] font-bold text-sm hover:underline decoration-2 underline-offset-4"
+                    >
+                      Apply Now
+                      <ArrowUpRight className="w-4 h-4 ml-1" />
+                    </a>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-10">
+                <p className="text-gray-500 text-lg font-medium">
+                  No jobs available in this category.
+                </p>
+                <p className="text-gray-400 text-sm mt-2">
+                  Please check back later for new opportunities.
+                </p>
               </div>
             )}
           </div>
-
-          {/* Loading State */}
-          {jobsLoading && (
-            <div className="flex flex-col items-center justify-center py-20">
-              <div className="w-12 h-12 border-4 border-gray-200 border-t-[#FF8F3D] rounded-full animate-spin mb-4"></div>
-              <p className="text-gray-500 text-sm">Loading jobs...</p>
-            </div>
-          )}
-
-          {/* Error State */}
-          {!jobsLoading && jobsError && (
-            <div className="flex flex-col items-center justify-center py-20">
-              <p className="text-red-500 text-lg font-medium mb-4">
-                {jobsError}
-              </p>
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 py-3 bg-[#FF8F3D] text-white rounded-full text-sm font-medium hover:bg-[#e67e2e] transition-colors"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!jobsLoading && !jobsError && filteredJobs.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20">
-              <p className="text-gray-500 text-lg font-medium">
-                No jobs available.
-              </p>
-              <p className="text-gray-400 text-sm mt-2">
-                Please check back later for new opportunities.
-              </p>
-            </div>
-          )}
-
-          {/* Jobs Grid */}
-          {!jobsLoading && !jobsError && filteredJobs.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredJobs.map((job) => (
-                <div
-                  key={job.id}
-                  className="bg-[#FAFAFA] p-8 rounded-xl border border-[#f4f4f4] hover:shadow-lg transition-shadow group"
-                >
-                  <div className="flex flex-col h-full">
-                    <h3 className="text-xl font-bold text-black mb-3">
-                      {job.title || "Untitled Position"}
-                    </h3>
-
-                    {job.location && (
-                      <div className="flex items-center text-gray-400 text-xs mb-6">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {job.location}
-                      </div>
-                    )}
-
-                    {job.description && (
-                      <p className="text-gray-500 text-sm mb-6 line-clamp-2">
-                        {stripHtml(job.description)}
-                      </p>
-                    )}
-
-                    {job.department && (
-                      <div className="flex items-center text-gray-600 text-sm font-medium mb-4">
-                        <Users className="w-4 h-4 mr-2" />
-                        {job.department}
-                      </div>
-                    )}
-
-                    {job.vacancies > 0 && (
-                      <div className="flex items-center text-gray-600 text-sm font-medium mb-6">
-                        <Clock className="w-4 h-4 mr-2" />
-                        {job.vacancies}{" "}
-                        {job.vacancies === 1 ? "Vacancy" : "Vacancies"}
-                      </div>
-                    )}
-
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {job.employment_type && (
-                        <span className="px-4 py-1.5 bg-[#EBEBEB] text-black text-xs font-semibold rounded-full">
-                          {job.employment_type}
-                        </span>
-                      )}
-                      {job.expected_degree && (
-                        <span className="px-4 py-1.5 bg-[#EBEBEB] text-black text-xs font-semibold rounded-full">
-                          {job.expected_degree}
-                        </span>
-                      )}
-                      {job.company_id && (
-                        <span className="px-4 py-1.5 bg-[#E0F2FE] text-blue-700 text-xs font-semibold rounded-full">
-                          {job.company_id}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="mt-auto">
-                      <a
-                        href={
-                          job.apply_url
-                            ? `https://career.betopiagroup.com/candidate/login?redirect=${encodeURIComponent(new URL(job.apply_url).pathname)}`
-                            : "#"
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-[#FF8F3D] font-bold text-sm hover:underline decoration-2 underline-offset-4"
-                      >
-                        Apply Now
-                        <ArrowUpRight className="w-4 h-4 ml-1" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
